@@ -1,29 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Clasifier {
 
-    private int ammount;
+
     public Clasifier() {
-    }
-
-    public int clasify(Employee employee){
-        int i;
-        for (String day:employee.getDays() ) {
-            switch (day){
-                case "MO":
-
-                case "TU":
-
-                case "WE":
-            }
-        }
-
-        return ammount;
     }
 
     public void tokenize(Employee employee){
@@ -76,24 +62,77 @@ public class Clasifier {
             employee.getHours().add(hours);
             System.out.println(employee.getDays().get(day_position));
             System.out.println(employee.getHours());
-            // count worked hours
-            workedHours = countWorkedHours(employee,day_position);
-            System.out.println(workedHours);
+
         }
     }
 
     public float countWorkedHours(Employee employee,int position){
+
         float workedHours=0;
         String firstHour;
         String lastHour;
-        
+
         // Split the beginning hour and the finishing hour
         String[] hoursParts = employee.getHours().get(position).split("-");
         firstHour = hoursParts[0];
         lastHour = hoursParts[1];
-        workedHours = Integer.valueOf(firstHour);
+        String[] firstHourPart = firstHour.split(":");
+        String[] lastHourPart = lastHour.split(":");
+        workedHours = Integer.valueOf(lastHourPart[0]) - Integer.valueOf(firstHourPart[0]);
         System.out.println(firstHour + " to " + lastHour);
 
         return workedHours;
+    }
+
+    public float countTotalSalary(Employee employee){
+        int number_of_days = employee.getDays().size();
+        int day_position;
+        float salary=0;
+        String day;
+        float workedHours;
+        float totalWorkedHours;
+
+        Pattern patMo_Fri1 = Pattern.compile("(MO|TU|TH|WE|FR)0[0-8]:00-0[1-9]:00");
+        Pattern patMo_Fri2 = Pattern.compile("(MO|TU|TH|WE|FR)((1[0-9]:00-1[0-8]:00)|(09:00-1[0-8]:00))");
+        Pattern patMo_Fri3 = Pattern.compile("(MO|TU|TH|WE|FR)((1(8|9):00-(1|2)[0-9]:00)|(1(8|9):00-00:00)|(2[0-9]:00-(1|2)[0-9]:00)|(2[0-9]:00-00:00))");
+        Pattern patSa_Su1 = Pattern.compile("(SA|SU)0[0-8]:00-0[1-9]:00");
+        Pattern patSa_Su2 = Pattern.compile("(SA|SU)((1[0-9]:00-1[0-8]:00)|(09:00-1[0-8]:00))");
+        Pattern patSa_Su3 = Pattern.compile("(SA|SU)((1(8|9):00-(1|2)[0-9]:00)|(1(8|9):00-00:00))");
+        Matcher mat1;
+        Matcher mat2;
+        Matcher mat3;
+        Matcher mat4;
+        Matcher mat5;
+        Matcher mat6;
+
+        for (day_position = 0; day_position < number_of_days; day_position++){
+            // count worked hours
+            day = employee.getDays().get(day_position);
+            mat1 = patMo_Fri1.matcher(day);
+            mat2 = patMo_Fri2.matcher(day);
+            mat3 = patMo_Fri3.matcher(day);
+            mat4 = patSa_Su1.matcher(day);
+            mat5 = patSa_Su2.matcher(day);
+            mat6 = patSa_Su3.matcher(day);
+
+            workedHours = countWorkedHours(employee,day_position);
+            if(mat1.find()){
+                salary = salary + workedHours*25;
+            }else if(mat2.find()){
+                salary = salary + workedHours*15;
+            }else if(mat3.find()){
+                salary = salary + workedHours*20;
+            }else if(mat4.find()){
+                salary = salary + workedHours*30;
+            }else if (mat5.find()){
+                salary = salary + workedHours*20;
+            }else if (mat6.find()){
+                salary = salary + workedHours*25;
+            }
+
+            System.out.println(workedHours);
+        }
+
+        return salary;
     }
 }
