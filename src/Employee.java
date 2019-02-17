@@ -5,7 +5,7 @@ public class Employee {
 
     private String name;
     private List<String> days = new ArrayList<>();
-    private int hours=0;
+    private List<String> hours = new ArrayList<>();
 
     public Employee() {
     }
@@ -26,11 +26,11 @@ public class Employee {
         this.days = days;
     }
 
-    public int getHours() {
+    public List<String> getHours() {
         return hours;
     }
 
-    public void setHours(int hours) {
+    public void setHours(List<String> hours) {
         this.hours = hours;
     }
 }
