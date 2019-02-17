@@ -1,11 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Employee {
 
-    private String name="";
-    private String days[];
+    private String name;
+    private List<String> days = new ArrayList<>();
     private int hours=0;
 
-    public Employee(String name) {
-        this.name = name;
+    public Employee() {
     }
 
     public String getName() {
@@ -16,11 +18,11 @@ public class Employee {
         this.name = name;
     }
 
-    public String[] getDays() {
+    public List<String> getDays() {
         return days;
     }
 
-    public void setDays(String[] days) {
+    public void setDays(List<String> days) {
         this.days = days;
     }
 
