@@ -10,6 +10,7 @@ public class Aplication {
             String string = new String();
             String name;
             String schedule;
+            String day;
             string = br.readLine();
             // tokenizer for each line of the text
             StringTokenizer tok = new StringTokenizer(string,"=");
@@ -17,16 +18,17 @@ public class Aplication {
             schedule = tok.nextToken();
             // tokenizer for each day of the employee's schedule
             StringTokenizer tok_schedule = new StringTokenizer(schedule,",");
+            day = tok_schedule.nextToken();
             System.out.println(""+name);
             System.out.println(""+schedule);
-            String day;
+            System.out.println(""+day);
             /*while((string=br.readLine())!=null){
                 System.out.println(""+string);
             }*/
 
 
         }catch (Exception e){
-
+            System.out.println("The file couldn't be opened"+e);
         }
     }
 }
