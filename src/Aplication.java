@@ -11,8 +11,8 @@ public class Aplication {
             FileReader fr = new FileReader("C:\\Users\\Primario\\Documents\\GitHub\\ACME\\Roster\\roster.txt");
             BufferedReader br = new BufferedReader(fr);
             //some important variables
-            String string = new String();
-            String schedule = new String();
+            String string ;
+            String schedule;
             String day;
             List<String> days = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class Aplication {
             // tokenizer for each day of the employee's schedule
             StringTokenizer tok_schedule = new StringTokenizer(schedule,",");
 
-            while(!tok.hasMoreElements()){
+            while(tok_schedule.hasMoreElements()){
 
                 day = tok_schedule.nextToken();
                 days.add(day);
