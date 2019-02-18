@@ -87,17 +87,17 @@ public class Clasifier {
     public float countTotalSalary(Employee employee){
         int number_of_days = employee.getDays().size();
         int day_position;
-        float salary=0;
+        float salary = 0;
         String day;
         float workedHours;
-        float totalWorkedHours;
+        float totalWorkedHours = 0;
 
         Pattern patMo_Fri1 = Pattern.compile("(MO|TU|TH|WE|FR)0[0-8]:00-0[1-9]:00");
         Pattern patMo_Fri2 = Pattern.compile("(MO|TU|TH|WE|FR)((1[0-9]:00-1[0-8]:00)|(09:00-1[0-8]:00))");
         Pattern patMo_Fri3 = Pattern.compile("(MO|TU|TH|WE|FR)((1(8|9):00-(1|2)[0-9]:00)|(1(8|9):00-00:00)|(2[0-9]:00-(1|2)[0-9]:00)|(2[0-9]:00-00:00))");
         Pattern patSa_Su1 = Pattern.compile("(SA|SU)0[0-8]:00-0[1-9]:00");
         Pattern patSa_Su2 = Pattern.compile("(SA|SU)((1[0-9]:00-1[0-8]:00)|(09:00-1[0-8]:00))");
-        Pattern patSa_Su3 = Pattern.compile("(SA|SU)((1(8|9):00-(1|2)[0-9]:00)|(1(8|9):00-00:00))");
+        Pattern patSa_Su3 = Pattern.compile("(SA|SU)((1(8|9):00-(1|2)[0-9]:00)|(1(8|9):00-00:00)|(2[0-9]:00-(1|2)[0-9]:00)|(2[0-9]:00-00:00))");
         Matcher mat1;
         Matcher mat2;
         Matcher mat3;
@@ -106,16 +106,18 @@ public class Clasifier {
         Matcher mat6;
 
         for (day_position = 0; day_position < number_of_days; day_position++){
-            // count worked hours
+            //store the day
             day = employee.getDays().get(day_position);
+            //comparison using the regular expressions
             mat1 = patMo_Fri1.matcher(day);
             mat2 = patMo_Fri2.matcher(day);
             mat3 = patMo_Fri3.matcher(day);
             mat4 = patSa_Su1.matcher(day);
             mat5 = patSa_Su2.matcher(day);
             mat6 = patSa_Su3.matcher(day);
-
+            // count worked hours
             workedHours = countWorkedHours(employee,day_position);
+
             if(mat1.find()){
                 salary = salary + workedHours*25;
             }else if(mat2.find()){
