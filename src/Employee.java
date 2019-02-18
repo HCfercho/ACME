@@ -6,6 +6,7 @@ public class Employee {
     private String name;
     private List<String> days = new ArrayList<>();
     private List<String> hours = new ArrayList<>();
+    private float SalaryAmmount;
 
     public Employee() {
     }
@@ -32,5 +33,13 @@ public class Employee {
 
     public void setHours(List<String> hours) {
         this.hours = hours;
+    }
+
+    public float getSalaryAmmount() {
+        return SalaryAmmount;
+    }
+
+    public void setSalaryAmmount(float salaryAmmount) {
+        SalaryAmmount = salaryAmmount;
     }
 }

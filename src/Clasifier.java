@@ -1,5 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -12,26 +11,19 @@ public class Clasifier {
     public Clasifier() {
     }
 
-    public void tokenize(Employee employee){
+    public void tokenize(Employee employee, String employeeBuffer){
         try {
-            //reading the file
-            FileReader fr = new FileReader("C:\\Users\\Primario\\Documents\\GitHub\\ACME\\Roster\\roster.txt");
-            BufferedReader br = new BufferedReader(fr);
-            //some important variables
-            String string ;
+            // some aux strings
             String schedule;
             String day;
             List<String> days = new ArrayList<>();
 
-            //Getting the information of each line
-            string = br.readLine();
-
             // tokenizer for each line of the text
-            StringTokenizer tok = new StringTokenizer(string,"=");
+            StringTokenizer tok = new StringTokenizer(employeeBuffer,"=");
             employee.setName(tok.nextToken());
             schedule = tok.nextToken();
-            System.out.println(""+employee.getName());
-            System.out.println(""+schedule);
+            //System.out.println(""+employee.getName());
+            //System.out.println(""+schedule);
 
             // tokenizer for each day of the employee's schedule
             StringTokenizer tok_schedule = new StringTokenizer(schedule,",");
@@ -41,7 +33,7 @@ public class Clasifier {
                 day = tok_schedule.nextToken();
                 days.add(day);
                 employee.setDays(days);
-                System.out.println(""+ employee.getDays());
+                //System.out.println(""+ employee.getDays());
             }
 
         }catch (Exception e){
@@ -56,13 +48,11 @@ public class Clasifier {
         for (day_position = 0; day_position < number_of_days; day_position++) {
             //needed strings
             String hours;
-            float workedHours;
             // separate the hours from the day
             hours = employee.getDays().get(day_position).substring(2);
             employee.getHours().add(hours);
-            System.out.println(employee.getDays().get(day_position));
-            System.out.println(employee.getHours());
-
+            //System.out.println(employee.getDays().get(day_position));
+            //System.out.println(employee.getHours());
         }
     }
 
@@ -79,7 +69,7 @@ public class Clasifier {
         String[] firstHourPart = firstHour.split(":");
         String[] lastHourPart = lastHour.split(":");
         workedHours = Integer.valueOf(lastHourPart[0]) - Integer.valueOf(firstHourPart[0]);
-        System.out.println(firstHour + " to " + lastHour);
+        //System.out.println(firstHour + " to " + lastHour);
 
         return workedHours;
     }
@@ -90,14 +80,14 @@ public class Clasifier {
         float salary = 0;
         String day;
         float workedHours;
-        float totalWorkedHours = 0;
-
+        //Regular expresions for each case
         Pattern patMo_Fri1 = Pattern.compile("(MO|TU|TH|WE|FR)0[0-8]:00-0[1-9]:00");
         Pattern patMo_Fri2 = Pattern.compile("(MO|TU|TH|WE|FR)((1[0-9]:00-1[0-8]:00)|(09:00-1[0-8]:00))");
         Pattern patMo_Fri3 = Pattern.compile("(MO|TU|TH|WE|FR)((1(8|9):00-(1|2)[0-9]:00)|(1(8|9):00-00:00)|(2[0-9]:00-(1|2)[0-9]:00)|(2[0-9]:00-00:00))");
         Pattern patSa_Su1 = Pattern.compile("(SA|SU)0[0-8]:00-0[1-9]:00");
         Pattern patSa_Su2 = Pattern.compile("(SA|SU)((1[0-9]:00-1[0-8]:00)|(09:00-1[0-8]:00))");
         Pattern patSa_Su3 = Pattern.compile("(SA|SU)((1(8|9):00-(1|2)[0-9]:00)|(1(8|9):00-00:00)|(2[0-9]:00-(1|2)[0-9]:00)|(2[0-9]:00-00:00))");
+        //Matchers to compare the day string with the corresponding regular expression
         Matcher mat1;
         Matcher mat2;
         Matcher mat3;
@@ -132,7 +122,7 @@ public class Clasifier {
                 salary = salary + workedHours*25;
             }
 
-            System.out.println(workedHours);
+            //System.out.println(workedHours);
         }
 
         return salary;
