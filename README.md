@@ -14,4 +14,4 @@ The programming paradigm chosen was Object Oriented, the tools used was:
 *   FileReader and Buffer to store each line of the text file
 *   ArrayList Java collection to store some important variables like the hours  
 
-
+To run the program you have to change the address of the roster.txt 
